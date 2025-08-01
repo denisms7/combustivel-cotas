@@ -21,11 +21,11 @@ class BuscaAbastecimento(LoginRequiredMixin, ListView):
             try:
                 data_formatada = datetime.strptime(query, "%Y-%m-%d").date()
                 queryset = queryset.filter(
-                    Q(medico__icontains=query) | Q(data=data_formatada)
+                    Q(veiculo__icontains=query) | Q(cadastrado_em=data_formatada)
                 )
             except ValueError:
                 queryset = queryset.filter(
-                    Q(medico__icontains=query)
+                    Q(veiculo__descricao__icontains=query) | Q(veiculo__placa__icontains=query)
                 )
 
         return queryset.order_by('-cadastrado_em')
