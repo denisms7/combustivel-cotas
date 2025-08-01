@@ -2,8 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
-
-
 class Cota(models.Model):
     TIPO_CHOICES = [
         (1, _('Semanal')),
@@ -17,8 +15,6 @@ class Cota(models.Model):
 
     def __str__(self):
         return f'{self.nome} L{self.litros} - {self.tipo}'
-
-
 
 class Veiculo(models.Model):
     COMBUSTIVEL_CHOICES = [
@@ -35,3 +31,12 @@ class Veiculo(models.Model):
 
     def __str__(self):
         return f'{self.placa} {self.descricao} - {self.combustivel}'
+    
+
+class Abastecimento(models.Model):
+    cadastrado_em = models.DateTimeField(auto_now_add=True, verbose_name=_('Data de Cadastro'))
+    cadastrado_por = models.ForeignKey(User, default=1, on_delete=models.PROTECT, verbose_name=_('Cadastrado por'))
+    veiculo = models.ForeignKey(Veiculo, verbose_name=_('Veiculo'), on_delete=models.PROTECT)
+    justificativa = models.TextField(max_length=2000, verbose_name=_('Justificativa'), null=True, blank=True)
+
+

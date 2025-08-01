@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+Abastecimento
+{% endblock %}
+
+{% block pagina %}
+
+<div class="container">
+    <h1></i>Abastecimento</h1>
+    <hr>
+</div>
+
+
+<div class="container">
+
+    <div class="d-flex justify-content-end my-3">
+        <a href="#" class="btn btn-primary"><i class="bi bi-plus me-1"></i>Adicionar Novo</a>
+    </div>
+
+    <form method="get">
+        <div class="row mb-3">
+            <label for="busca" class="form-label">Pesquisar:</label>
+            <div class="d-flex align-items-end" id="busca">
+                <input type="text" name="q" value="{{ request.GET.q }}" placeholder=""
+                    class="form-control me-1">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-search" id="lupacep"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <div class="table-responsive">
+        <table class="table table-sm table-striped mt-3">
+            <thead class="corPrincipal">
+                <tr>
+                    <th scope="col">Data:</th>
+                    <th scope="col">Placa:</th>
+                    <th scope="col">Descrição:</th>
+                    <th scope="col">Cota:</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in object_list %}
+                <tr>
+                    <td>{{item.cadastrado_em }}</td>
+                    <td>{{item.veiculo.placa }}</td>
+                    <td>{{item.veiculo.descricao }}</td>
+                    <td>{{item.veiculo.cota.litros }}</td>
+                    <td class="d-flex justify-content-end">
+                        <div>
+                            <a href="#" class="btn btn-primary btn-sm">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a href="#" class="btn btn-danger btn-sm">
+                                <i class="bi bi-trash3"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center">Nao existem lançamentos</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% include "paginacao.html" %}
+
+{% endblock %}
