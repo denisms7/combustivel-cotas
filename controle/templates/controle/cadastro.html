@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+Abastecimento
+{% endblock %}
+
+{% block pagina %}
+
+<div class="container">
+    <h1></i>Abastecimento</h1>
+    <hr>
+</div>
+
+
+<div class="container">
+
+        <form method="post" class="row needs-validation" novalidate>
+        {% csrf_token %}
+
+        <div class="col-sm-12 col-md-6 mb-3">
+            <label for="{{ form.veiculo.id_for_label }}" class="form-label">{{ form.veiculo.label }}: {% if form.veiculo.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+            {% render_field form.veiculo class="form-select" %}
+            {% for error in form.veiculo.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="col-sm-12 col-md-6 mb-3">
+            <label for="{{ form.justificativa.id_for_label }}" class="form-label">{{ form.justificativa.label }}: {% if form.justificativa.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+            {% render_field form.justificativa class="form-control" %}
+            {% for error in form.justificativa.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+
+        <div class="col-12">
+            <div class="g-0 mt-2">
+                <button type="submit" class="btn btn-success my-1 me-1">
+                    <i class="bi bi-check-lg me-1"></i>Salvar
+                </button>
+                <button type="reset" class="btn btn-warning my-1 me-1">
+                    <i class="bi bi-x me-1"></i>Limpar
+                </button>
+                <a href="{% url 'abastecimento-busca' %}" class="btn btn-primary my-1">
+                    <i class="bi bi-arrow-return-left me-1"></i>Voltar
+                </a>
+            </div>
+        </div>
+
+    </form>
+
+
+</div>
+
+
+
+{% endblock %}

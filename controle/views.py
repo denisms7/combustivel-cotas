@@ -1,18 +1,42 @@
 from django.views.generic.list import ListView
+from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Q, ProtectedError
+from django.contrib import messages
+from django.urls import reverse_lazy
+from django.db.models import Q
 from .models import Abastecimento
-
+from .forms import AbastecimentoForm
+from datetime import datetime
 
 class BuscaAbastecimento(LoginRequiredMixin, ListView):
-    paginate_by = 20
     model = Abastecimento
     template_name = 'controle/busca.html'
+    paginate_by = 20
+
     def get_queryset(self):
         queryset = super().get_queryset()
         query = self.request.GET.get('q')
+
         if query:
-            queryset = queryset.filter(
-                Q(medico__icontains=query) | Q(data__icontains=query)
-            )
-        return queryset
+            try:
+                data_formatada = datetime.strptime(query, "%Y-%m-%d").date()
+                queryset = queryset.filter(
+                    Q(medico__icontains=query) | Q(data=data_formatada)
+                )
+            except ValueError:
+                queryset = queryset.filter(
+                    Q(medico__icontains=query)
+                )
+
+        return queryset.order_by('-data')
+
+class AddedAbastecimento(LoginRequiredMixin, CreateView):
+    model = Abastecimento
+    form_class = AbastecimentoForm
+    template_name = 'controle/cadastro.html'
+    success_url = reverse_lazy('abastecimento-busca')
+
+    def form_valid(self, form):
+        form.instance.cadastrado_por = self.request.user
+        messages.success(self.request, "Registro salvo com sucesso.")
+        return super().form_valid(form)
