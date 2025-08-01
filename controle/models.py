@@ -14,7 +14,7 @@ class Cota(models.Model):
     tipo = models.PositiveSmallIntegerField(default=1, choices=TIPO_CHOICES, verbose_name='Tipo')
 
     def __str__(self):
-        return f'{self.nome} L{self.litros} - {self.tipo}'
+        return f'{self.nome} L{self.litros}'
 
 class Veiculo(models.Model):
     COMBUSTIVEL_CHOICES = [

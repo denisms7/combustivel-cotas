@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load widget_tweaks %}
+
 {% block titulo %}
 Abastecimento
 {% endblock %}
@@ -25,7 +27,7 @@ Abastecimento
             {% endfor %}
         </div>
 
-        <div class="col-sm-12 col-md-6 mb-3">
+        <div class="col-sm-12 col-md-12 mb-3">
             <label for="{{ form.justificativa.id_for_label }}" class="form-label">{{ form.justificativa.label }}: {% if form.justificativa.field.required %}<span class="text-danger">*</span>{% endif %}</label>
             {% render_field form.justificativa class="form-control" %}
             {% for error in form.justificativa.errors %}

@@ -28,7 +28,7 @@ class BuscaAbastecimento(LoginRequiredMixin, ListView):
                     Q(medico__icontains=query)
                 )
 
-        return queryset.order_by('-data')
+        return queryset.order_by('-cadastrado_em')
 
 class AddedAbastecimento(LoginRequiredMixin, CreateView):
     model = Abastecimento
