@@ -15,6 +15,12 @@
 </head>
 
 <body>
+        
+        {% block menu %}
+        <div class="mb-2">
+            {% include "menu.html" %}
+        </div>
+        {% endblock %}
     
     {% include "alertas.html" %}
 

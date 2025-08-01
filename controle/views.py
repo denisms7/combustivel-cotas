@@ -34,7 +34,7 @@ class AddedAbastecimento(LoginRequiredMixin, CreateView):
     model = Abastecimento
     form_class = AbastecimentoForm
     template_name = 'controle/cadastro.html'
-    success_url = reverse_lazy('abastecimento-busca')
+    success_url = reverse_lazy('inicio')
 
     def form_valid(self, form):
         form.instance.cadastrado_por = self.request.user
