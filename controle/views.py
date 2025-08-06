@@ -4,9 +4,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.db.models import Q
-from .models import Abastecimento
+from .models import Abastecimento, Cota
 from .forms import AbastecimentoForm
 from datetime import datetime
+from django.db.models.functions import ExtractWeek, ExtractMonth, ExtractYear
+from django.utils.timezone import localtime
 
 class BuscaAbastecimento(LoginRequiredMixin, ListView):
     model = Abastecimento
@@ -30,6 +32,7 @@ class BuscaAbastecimento(LoginRequiredMixin, ListView):
 
         return queryset.order_by('-cadastrado_em')
 
+
 class AddedAbastecimento(LoginRequiredMixin, CreateView):
     model = Abastecimento
     form_class = AbastecimentoForm
@@ -37,6 +40,45 @@ class AddedAbastecimento(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('inicio')
 
     def form_valid(self, form):
+        veiculo = form.cleaned_data['veiculo']
+        data_atual = localtime().date()
+        cota_tipo = veiculo.cota.tipo  # 1 = semanal, 2 = mensal
+
+        abastecimentos = Abastecimento.objects.filter(veiculo=veiculo)
+
+        if cota_tipo == 1:  # Semanal
+            semana_atual = data_atual.isocalendar().week
+            ano_atual = data_atual.isocalendar().year
+
+            existe = abastecimentos.annotate(
+                semana=ExtractWeek('cadastrado_em'),
+                ano=ExtractYear('cadastrado_em')
+            ).filter(
+                semana=semana_atual,
+                ano=ano_atual
+            ).exists()
+
+            if existe:
+                messages.warning(self.request, f'Já existe um abastecimento para o veículo {veiculo} nesta semana.')
+                return self.form_invalid(form)
+
+        elif cota_tipo == 2:  # Mensal
+            mes_atual = data_atual.month
+            ano_atual = data_atual.year
+
+            existe = abastecimentos.annotate(
+                mes=ExtractMonth('cadastrado_em'),
+                ano=ExtractYear('cadastrado_em')
+            ).filter(
+                mes=mes_atual,
+                ano=ano_atual
+            ).exists()
+
+            if existe:
+                messages.warning(self.request, f'Já existe um abastecimento para o veículo {veiculo} neste mês.')
+                return self.form_invalid(form)
+
+        # Salva normalmente se não houver conflito
         form.instance.cadastrado_por = self.request.user
         messages.success(self.request, "Registro salvo com sucesso.")
         return super().form_valid(form)

@@ -26,6 +26,7 @@ class Veiculo(models.Model):
     placa = models.CharField(max_length=150, verbose_name=_('Placa'), unique=True)
     combustivel = models.PositiveSmallIntegerField(default=1, choices=COMBUSTIVEL_CHOICES, verbose_name='Tipo')
     cota = models.ForeignKey(Cota, verbose_name=_('Cota'), default=1, on_delete=models.PROTECT)
+    cota_qnt = models.IntegerField(default=1, verbose_name=_('N Abastecimentos'))
 
     def __str__(self):
         return f'{self.placa} {self.descricao} - {self.combustivel}'

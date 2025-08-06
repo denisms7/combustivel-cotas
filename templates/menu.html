@@ -1,38 +1,96 @@
 {% load static %}
-<div class=" bg-body-tertiary">
-    <div class="container">
-<nav class="navbar navbar-expand-lg ">
+<div class="text-bg-primary">
+
+<div class="container">
+<nav class="navbar navbar-expand-lg text-bg-primary">
     <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'inicio' %}">
             <img src="{% static 'img/ico.png' %}" alt="lg" style="max-height: 25px;">
+            INICIO
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link" href="#">Relatorios</a>
                 </li>
+            </ul>
+
+
+            <ul class="navbar-nav">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Usuário
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{% url 'perfil' %}">Perfil</a></li>
-                        <li><a class="dropdown-item" href="{% url 'alterar_usuario' %}">Alterar Usuário</a></li>
-                        <li><a class="dropdown-item" href="{% url 'alterar_senha' %}">Alterar Senha</a></li>
-                    </ul>
+                <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person-circle"></i>
+                    {{request.user.username}}
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{% url 'perfil' %}">
+                        <i class="bi bi-person-vcard"></i>
+                        Perfil</a>
+                    </li>
+                    <li><a class="dropdown-item" href="{% url 'alterar_usuario' %}">
+                        <i class="bi bi-person-gear"></i>
+                        Alterar Usuário</a>
+                    </li>
+                    <li><a class="dropdown-item" href="{% url 'alterar_senha' %}">
+                        <i class="bi bi-person-lock"></i>
+                        Alterar Senha</a>
+                    </li>
+                    <li>
+                    <hr class="dropdown-divider">
+                    </li>
+                    <li class="text-center">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#sair">
+                        <i class="bi bi-door-open"></i>
+                        Logout
+                    </button>
+                    </li>
+                </ul>
                 </li>
             </ul>
-            <form class="d-flex" method="POST" action="{% url 'logout' %}">
-                {% csrf_token %}
-                <button class="btn btn-outline-danger" type="submit">Sair</button>
-            </form>
+
         </div>
     </div>
 </nav>
 </div>
+</div>
+
+</div>
+
+
+
+
+<div class="modal" id="sair" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Deseja mesmo sair?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Olá {{request.user.first_name}} {{request.user.last_name}}<br>
+          Confirme para fazer logoff do sistema
+        </p>
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          <i class="bi bi-x-lg"></i>
+          Cancelar
+        </button>
+        <form method="POST" action="{% url 'logout' %}" style="display:inline;">
+        {% csrf_token %}
+          <button type="submit" class="btn btn-danger">
+            <i class="bi bi-door-closed"></i> Sair
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>

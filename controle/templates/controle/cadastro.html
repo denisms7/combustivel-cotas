@@ -8,6 +8,17 @@ Abastecimento
 
 {% block pagina %}
 
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@1.5.2/dist/select2-bootstrap4.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+
+
+
 <div class="container">
     <h1></i>Abastecimento</h1>
     <hr>
@@ -20,8 +31,8 @@ Abastecimento
         {% csrf_token %}
 
         <div class="col-sm-12 col-md-6 mb-3">
-            <label for="{{ form.veiculo.id_for_label }}" class="form-label">{{ form.veiculo.label }}: {% if form.veiculo.field.required %}<span class="text-danger">*</span>{% endif %}</label>
-            {% render_field form.veiculo class="form-select" %}
+            <label for="{{ form.veiculo.id_for_label }}" class="form-label ">{{ form.veiculo.label }}: {% if form.veiculo.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+            {% render_field form.veiculo class="form-select js-example-basic-single select2-bootstrap4" %}
             {% for error in form.veiculo.errors %}
                 <span class="text-danger">{{ error }}</span>
             {% endfor %}
@@ -55,6 +66,11 @@ Abastecimento
 
 </div>
 
-
+<script>
+    $('.js-example-basic-single').select2({
+        theme: 'bootstrap4',
+        placeholder: 'Selecione um Carro',
+    });
+</script>
 
 {% endblock %}
