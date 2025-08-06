@@ -8,7 +8,6 @@ class Cota(models.Model):
         (2, _('Mensal')),
         ]
     cadastrado_em = models.DateTimeField(auto_now_add=True, verbose_name=_('Data de Cadastro'))
-    cadastrado_por = models.ForeignKey(User, default=1, on_delete=models.PROTECT, verbose_name=_('Cadastrado por'), null=True, blank=True)
     nome = models.CharField(max_length=150, verbose_name=_('Nome'))
     litros = models.DecimalField(max_digits=10, decimal_places=2, verbose_name=_('Litros'))
     tipo = models.PositiveSmallIntegerField(default=1, choices=TIPO_CHOICES, verbose_name='Tipo')
@@ -23,9 +22,8 @@ class Veiculo(models.Model):
         (3, _('Alcool')),
         ]
     cadastrado_em = models.DateTimeField(auto_now_add=True, verbose_name=_('Data de Cadastro'))
-    cadastrado_por = models.ForeignKey(User, default=1, on_delete=models.PROTECT, verbose_name=_('Cadastrado por'))
     descricao = models.CharField(max_length=150, verbose_name=_('Descrição'))
-    placa = models.CharField(max_length=150, verbose_name=_('Placa'))
+    placa = models.CharField(max_length=150, verbose_name=_('Placa'), unique=True)
     combustivel = models.PositiveSmallIntegerField(default=1, choices=COMBUSTIVEL_CHOICES, verbose_name='Tipo')
     cota = models.ForeignKey(Cota, verbose_name=_('Cota'), default=1, on_delete=models.PROTECT)
 
