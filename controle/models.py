@@ -40,4 +40,5 @@ class Abastecimento(models.Model):
     veiculo = models.ForeignKey(Veiculo, verbose_name=_('Veiculo'), on_delete=models.PROTECT)
     justificativa = models.TextField(max_length=2000, verbose_name=_('Justificativa'), null=True, blank=True)
 
-
+    def __str__(self):
+        return f'{self.veiculo.placa or ""} {self.veiculo.descricao}'
