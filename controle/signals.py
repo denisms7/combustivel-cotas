@@ -46,9 +46,7 @@ def cadastrar_secretarias_padrao(sender, **kwargs):
         "Secretaria de Educação", 
         "Secretaria de Esporte, Cultura e Lazer", 
         "Secretaria de Assistência Social", 
-        "Secretaria de Infraestrutura e Serviços Públicos", 
-        "APAE", 
-        "Asilo", 
+        "Secretaria de Infraestrutura e Serviços Públicos",
         ]
 
     
