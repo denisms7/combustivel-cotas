@@ -2,6 +2,20 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
+class Secretaria(models.Model):
+    cadastrado_em = models.DateTimeField(auto_now_add=True, verbose_name=_('Data de Cadastro'))
+    alterado_em = models.DateTimeField(auto_now=True, verbose_name=_('Data de Alteração'))
+    secretaria = models.CharField(max_length=150, verbose_name=_('Secretaria'))
+    class Meta:
+        verbose_name = _('Secretaria')
+        verbose_name_plural = _('Secretarias')
+        ordering = ['secretaria']
+    
+    def __str__(self):
+        return f'{self.secretaria}'
+
+
+
 class Cota(models.Model):
     TIPO_CHOICES = [
         (1, _('Semanal')),
@@ -51,6 +65,7 @@ class Abastecimento(models.Model):
     cadastrado_por = models.ForeignKey(User, default=1, on_delete=models.PROTECT, verbose_name=_('Cadastrado por'))
     alterado_em = models.DateTimeField(auto_now=True, verbose_name=_('Data de Alteração'))
     veiculo = models.ForeignKey(Veiculo, verbose_name=_('Veiculo'), on_delete=models.PROTECT)
+    secretaria = models.ForeignKey(Secretaria, verbose_name=_('Secretaria'), on_delete=models.PROTECT)
     justificativa = models.TextField(max_length=2000, verbose_name=_('Justificativa'), null=True, blank=True)
 
     class Meta:
@@ -60,3 +75,6 @@ class Abastecimento(models.Model):
 
     def __str__(self):
         return f'{self.veiculo.placa or ""} {self.veiculo.descricao}'
+    
+
+

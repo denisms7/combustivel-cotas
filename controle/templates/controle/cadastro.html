@@ -38,9 +38,18 @@ Abastecimento
             {% endfor %}
         </div>
 
+
+        <div class="col-sm-12 col-md-6 mb-3">
+            <label for="{{ form.secretaria.id_for_label }}" class="form-label ">{{ form.secretaria.label }}: {% if form.secretaria.field.required %}<span class="text-danger">*</span>{% endif %}</label>
+            {% render_field form.secretaria class="form-select js-example-basic-single select2-bootstrap4" %}
+            {% for error in form.secretaria.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
         <div class="col-sm-12 col-md-12 mb-3">
             <label for="{{ form.justificativa.id_for_label }}" class="form-label">{{ form.justificativa.label }}: {% if form.justificativa.field.required %}<span class="text-danger">*</span>{% endif %}</label>
-            {% render_field form.justificativa class="form-control" %}
+            {% render_field form.justificativa class="form-control" rows="3"%}
             {% for error in form.justificativa.errors %}
                 <span class="text-danger">{{ error }}</span>
             {% endfor %}

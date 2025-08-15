@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Cota, Veiculo, Abastecimento
+from .models import Cota, Veiculo, Abastecimento, Secretaria
 from import_export import resources, fields
 from import_export.admin import ExportMixin
 
@@ -29,7 +29,13 @@ class AbastecimentoResource(resources.ModelResource):
             )
 
 
-
+@admin.register(Secretaria)
+class Secretariadmin(admin.ModelAdmin):
+    list_display = ['secretaria'] # ver tabela
+    search_fields = ['secretaria']
+    readonly_fields = ['cadastrado_em'] # campos somente leitura
+    list_per_page = 25  # quantidade de registros por página
+    ordering = ['-cadastrado_em']  # do mais recente para o mais antigo
 
 
 @admin.register(Cota)

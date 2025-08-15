@@ -7,5 +7,6 @@ class AbastecimentoForm(forms.ModelForm):
         model = Abastecimento
         fields = [
             'veiculo',
+            'secretaria',
             'justificativa',
         ]

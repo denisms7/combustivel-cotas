@@ -1,6 +1,6 @@
 from django.db.models.signals import post_migrate
 from django.dispatch import receiver
-from .models import Veiculo, Cota
+from .models import Veiculo, Cota, Secretaria
 from django.conf import settings
 import os
 import pandas as pd
@@ -28,7 +28,32 @@ def cadastrar_cotas_padrao(sender, **kwargs):
             print(f'Cota criada: {obj.nome}')
 
 
+@receiver(post_migrate)
+def cadastrar_secretarias_padrao(sender, **kwargs):
+    if sender.name != 'controle': 
+        return
+    
+    secretarias_padrao = [
+        "Chefia de Gabinete", 
+        "Procuradoria Geral", 
+        "Controladoria", 
+        "Secretaria de Administração", 
+        "Secretaria de Fazenda", 
+        "Secretaria de Planejamento e Gestão", 
+        "Secretaria de Desenvolvimento Econômico e Turismo", 
+        "Secretaria de Agricultura e Meio Ambiente", 
+        "Secretaria de Saúde", 
+        "Secretaria de Educação", 
+        "Secretaria de Esporte, Cultura e Lazer", 
+        "Secretaria de Assistência Social", 
+        "Secretaria de Infraestrutura e Serviços Públicos", 
+        "APAE", 
+        "Asilo", 
+        ]
 
+    
+    for nome in secretarias_padrao:
+        Secretaria.objects.get_or_create(secretaria=nome)
 
 @receiver(post_migrate)
 def importar_veiculos(sender, **kwargs):

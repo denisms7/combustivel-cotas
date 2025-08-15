@@ -39,6 +39,7 @@ Abastecimento
                 <tr>
                     <th scope="col">Data:</th>
                     <th scope="col">Usuário:</th>
+                    <th scope="col">Secretaria:</th>
                     <th scope="col">Placa:</th>
                     <th scope="col">Descrição:</th>
                     <th scope="col">Cota:</th>
@@ -50,6 +51,7 @@ Abastecimento
                 <tr>
                     <td>{{item.cadastrado_em|date:"d/m/Y H:i" }}</td>
                     <td>{{item.cadastrado_por }}</td>
+                    <td>{{item.secretaria }}</td>
                     <td>{{item.veiculo.placa|default_if_none:"-" }}</td>
                     <td>{{item.veiculo.descricao|default_if_none:"" }}</td>
                     <td>{{item.veiculo.cota.litros }}L</td>
