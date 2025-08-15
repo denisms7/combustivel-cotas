@@ -48,9 +48,9 @@ Abastecimento
                 {% for item in object_list %}
                 <tr>
                     <td>{{item.cadastrado_em }}</td>
-                    <td>{{item.veiculo.placa }}</td>
-                    <td>{{item.veiculo.descricao }}</td>
-                    <td>{{item.veiculo.cota.litros }}</td>
+                    <td>{{item.veiculo.placa|default_if_none:"-" }}</td>
+                    <td>{{item.veiculo.descricao|default_if_none:"" }}</td>
+                    <td>{{item.veiculo.cota.litros }}L</td>
                     <td class="justify-content-end">
                         <div>
                             

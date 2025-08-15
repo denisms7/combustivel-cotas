@@ -33,6 +33,7 @@ Veiculos
         <table class="table table-sm table-striped mt-3">
             <thead class="table-dark">
                 <tr>
+                    <th scope="col">ID:</th>
                     <th scope="col">Placa:</th>
                     <th scope="col">Descrição:</th>
                     <th scope="col">Cumbustivel:</th>
@@ -43,6 +44,7 @@ Veiculos
             <tbody>
                 {% for item in object_list %}
                 <tr>
+                    <td>{{ item.pk|default_if_none:"00" }}</td>
                     <td>{{ item.placa|default_if_none:"" }}</td>
                     <td>{{ item.descricao|default_if_none:"" }}</td>
                     <td>{{ item.get_combustivel_display|default_if_none:"" }}</td>
@@ -53,7 +55,7 @@ Veiculos
                 </tr>
                 {% empty %}
                     <tr>
-                        <td colspan="5" class="text-center">Nao existem lançamentos</td>
+                        <td colspan="6" class="text-center">Nao existem lançamentos</td>
                     </tr>
                 {% endfor %}
             </tbody>
