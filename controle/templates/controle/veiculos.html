@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+Veiculos
+{% endblock %}
+
+{% block pagina %}
+
+
+
+<div class="container">
+    <h1></i>Veiculos</h1>
+    <hr>
+</div>
+
+
+<div class="container">
+
+    <form method="get">
+        <div class="row mb-3">
+            <label for="busca" class="form-label">Pesquisar:</label>
+            <div class="d-flex align-items-end" id="busca">
+                <input type="text" name="q" value="{{ request.GET.q }}" placeholder=""
+                    class="form-control me-1">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-search" id="lupacep"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <div class="table-responsive">
+        <table class="table table-sm table-striped mt-3">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Placa:</th>
+                    <th scope="col">Descrição:</th>
+                    <th scope="col">Cumbustivel:</th>
+                    <th scope="col">Cota</th>
+                    <th scope="col">Qnt</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in object_list %}
+                <tr>
+                    <td>{{ item.placa|default_if_none:"" }}</td>
+                    <td>{{ item.descricao|default_if_none:"" }}</td>
+                    <td>{{ item.get_combustivel_display|default_if_none:"" }}</td>
+                    <td>
+                        {{ item.cota.get_tipo_display }} {{ item.cota.litros }}L
+                    </td>
+                    <td>{{ item.cota_qnt|default_if_none:"" }} Abastecimento</td>
+                </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center">Nao existem lançamentos</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% include "paginacao.html" %}
+
+{% endblock %}

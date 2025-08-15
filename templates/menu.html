@@ -8,12 +8,17 @@
   <li class="nav-item">
     <a class="nav-link {% if request.path == '/' %}active{% endif %}" aria-current="page" href="{% url 'inicio' %}">
         <img src="{% static 'img/ico.png' %}" alt="lg" style="max-height: 25px;">
-        INICIO
+        Abastecimento
     </a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="#">
       <i class="bi bi-bar-chart"></i> Relatório
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link {% if request.path == '/carros/' %}active{% endif %}" href="{% url 'BuscaVeiculos' %}">
+      <i class="bi bi-truck"></i> Veiculos
     </a>
   </li>
   {% if user.is_superuser %}

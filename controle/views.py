@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.db.models import Q
-from .models import Abastecimento, Cota
+from .models import Abastecimento, Cota, Veiculo
 from .forms import AbastecimentoForm
 from datetime import datetime
 from django.db.models.functions import ExtractWeek, ExtractMonth, ExtractYear
@@ -50,16 +50,22 @@ class AddedAbastecimento(LoginRequiredMixin, CreateView):
             semana_atual = data_atual.isocalendar().week
             ano_atual = data_atual.isocalendar().year
 
+            # Contar abastecimentos da semana atual
             existe = abastecimentos.annotate(
                 semana=ExtractWeek('cadastrado_em'),
                 ano=ExtractYear('cadastrado_em')
             ).filter(
                 semana=semana_atual,
                 ano=ano_atual
-            ).exists()
+            ).count()
+            
 
-            if existe:
-                messages.warning(self.request, f'Já existe um abastecimento para o veículo {veiculo} nesta semana.')
+            # Aqui você deve acessar a cota correta
+            cota_qnt = veiculo.cota_qnt  # supondo que o campo cota_qnt esteja no modelo Veiculo
+
+                    
+            if existe >= cota_qnt:
+                messages.warning(self.request, f'Já existe um abastecimento para o veículo: {veiculo.descricao}. Total de abastecimentos {existe}')
                 return self.form_invalid(form)
 
         elif cota_tipo == 2:  # Mensal
@@ -82,3 +88,25 @@ class AddedAbastecimento(LoginRequiredMixin, CreateView):
         form.instance.cadastrado_por = self.request.user
         messages.success(self.request, "Registro salvo com sucesso.")
         return super().form_valid(form)
+    
+
+
+
+
+
+
+class BuscaVeiculos(LoginRequiredMixin, ListView):
+    model = Veiculo
+    template_name = 'controle/veiculos.html'
+    paginate_by = 20
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        query = self.request.GET.get('q')
+
+        if query:
+            queryset = queryset.filter(
+                Q(descricao__icontains=query) | Q(placa__icontains=query)
+            )
+
+        return queryset.order_by('-cadastrado_em') 
