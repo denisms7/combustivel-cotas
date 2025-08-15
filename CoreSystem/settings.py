@@ -26,6 +26,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -33,6 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'widget_tweaks',
+    'import_export',
     'controle.apps.ControleConfig',
     'usuarios.apps.UsuariosConfig',
 ]
@@ -134,3 +136,54 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'inicio'
 LOGOUT_REDIRECT_URL = 'inicio'
 LOGIN_URL = 'login'
+
+
+
+
+
+
+
+
+JAZZMIN_SETTINGS = {
+
+    "site_title": "Administração",
+    "site_header": "Administração",
+    "site_brand": "Administração",
+
+    "welcome_sign": "Abastecimento Admin",
+
+    "site_logo": "img/ico.png",
+
+    "copyright": "PMCS",
+
+    # Logo to use for your site, must be present in static files, used for login form logo (defaults to site_logo)
+    "login_logo": None,
+
+    # Logo to use for login form in dark themes (defaults to login_logo)
+    "login_logo_dark": None,
+
+    # CSS classes that are applied to the logo above
+    "site_logo_classes": "img/ico.png",
+
+    # Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)
+    "site_icon": "img/ico.png",
+
+
+
+    "icons": {
+        # Seus modelos do app 'controle'
+        "controle.Cota": "fas fa-box",
+        "controle.Veiculo": "fas fa-car",
+        "controle.Abastecimento": "fas fa-gas-pump", 
+
+        # Modelos padrão do Django
+        "auth.User": "fas fa-user",
+        "auth.Group": "fas fa-users",
+    },
+
+    # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user
+    "user_avatar": None,
+
+    "show_ui_builder": False,  # Show the UI Builder link in the admin sidebar
+
+}
