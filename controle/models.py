@@ -18,7 +18,7 @@ class Cota(models.Model):
 class Veiculo(models.Model):
     COMBUSTIVEL_CHOICES = [
         (1, _('Gasolina')),
-        (2, _('Diesel S10')),
+        (2, _('Diesel')),
         (3, _('Flex e Semelhantes')),
         (4, _('Outros')),
         ]
