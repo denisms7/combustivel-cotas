@@ -1,6 +1,6 @@
 from django.urls import path
-from .controle import controle
+from . import views
 
 urlpatterns = [
-    path('relatorio/', AddedAbastecimento.as_view(), name='abastecimento-added'),
+    path('relatorio-abastecimento/', views.relatorio_abastecimento, name='rel_abastecimento'),
 ]

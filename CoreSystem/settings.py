@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'import_export',
     'controle.apps.ControleConfig',
     'usuarios.apps.UsuariosConfig',
+
+    'relatorios.apps.RelatoriosConfig',
 ]
 
 MIDDLEWARE = [

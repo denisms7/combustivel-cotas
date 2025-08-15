@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+{% block titulo %}
+Relatório
+{% endblock %}
+
+{% block pagina %}
+
+
+<div class="container">
+    <h1></i>Relatório de Abastecimento</h1>
+    <hr>
+</div>
+
+
+
+<div class="container mb-4">
+    <form method="get" class="row g-3">
+        <div class="col-6 col-sm-6 col-md-4">
+            <label for="data_inicial" class="form-label">Data Inicial:</label>
+            <input type="date" name="data_inicial" class="form-control" id="data_inicial" value="{{ data_inicial|date:'Y-m-d' }}" required>
+        </div>
+        <div class="col-6 col-sm-6 col-md-4">
+            <label for="data_final" class="form-label">Data Final:</label>
+            <input type="date" name="data_final" class="form-control" id="data_final" value="{{ data_final|date:'Y-m-d' }}" required>
+        </div>
+        <div class="col-md-4 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i> Buscar</button>
+        </div>
+    </form>
+</div>
+
+
+<div class="container mb-4">
+    <h3>Totais por Secretaria e Tipo de Combustível</h3>
+    <table class="table table-hover">
+        <tr>
+            <th>Secretaria</th>
+            <th>Tipo de Combustível</th>
+            <th>Total de Litros</th>
+        </tr>
+        {% for item in litros_por_secretaria_combustivel %}
+        <tr>
+            <td>{{ item.secretaria }}</td>
+            <td>{{ item.combustivel }}</td>
+            <td>{{ item.total_litros }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="3">Nenhum dado encontrado</td></tr>
+        {% endfor %}
+    </table>
+</div>
+<div class="container mb-4">
+<h3>Totais por Carro</h3>
+    <table class="table table-hover">
+        <tr>
+            <th>Placa</th>
+            <th>Total de Litros</th>
+        </tr>
+        {% for item in litros_por_carro %}
+        <tr>
+            <td>{{ item.placa }}</td>
+            <td>{{ item.total_litros }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="2">Nenhum dado encontrado</td></tr>
+        {% endfor %}
+    </table>
+
+</div>
+
+{% endblock %}

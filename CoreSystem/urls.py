@@ -6,4 +6,6 @@ urlpatterns = [
 
     path('', include('controle.urls')),
     path('', include('usuarios.urls')),
+
+    path('', include('relatorios.urls')),
 ]
