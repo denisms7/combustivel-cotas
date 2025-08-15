@@ -19,17 +19,19 @@ class Veiculo(models.Model):
     COMBUSTIVEL_CHOICES = [
         (1, _('Gasolina')),
         (2, _('Diesel S10')),
-        (3, _('Alcool')),
+        (3, _('Fles e Semelhantes')),
+        (4, _('Outros')),
         ]
+    cod_veiculo = models.IntegerField(verbose_name=_('ID Veículo'), unique=True)
     cadastrado_em = models.DateTimeField(auto_now_add=True, verbose_name=_('Data de Cadastro'))
     descricao = models.CharField(max_length=150, verbose_name=_('Descrição'))
-    placa = models.CharField(max_length=150, verbose_name=_('Placa'), unique=True)
+    placa = models.CharField(max_length=150, verbose_name=_('Placa'), null=True, blank=True)
     combustivel = models.PositiveSmallIntegerField(default=1, choices=COMBUSTIVEL_CHOICES, verbose_name='Tipo')
     cota = models.ForeignKey(Cota, verbose_name=_('Cota'), default=1, on_delete=models.PROTECT)
     cota_qnt = models.IntegerField(default=1, verbose_name=_('N Abastecimentos'))
 
     def __str__(self):
-        return f'{self.placa} {self.descricao} - {self.combustivel}'
+        return f'{self.placa} {self.descricao}'
     
 
 class Abastecimento(models.Model):
