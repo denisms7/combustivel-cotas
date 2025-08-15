@@ -32,15 +32,16 @@ Relatório
     </form>
 </div>
 
-
 <div class="container mb-4">
     <h3>Totais por Secretaria e Tipo de Combustível</h3>
-    <table class="table table-hover">
-        <tr>
-            <th>Secretaria</th>
-            <th>Tipo de Combustível</th>
-            <th>Total de Litros</th>
-        </tr>
+    <table class="table table-sm table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Secretaria</th>
+                <th>Tipo de Combustível</th>
+                <th>Total de Litros</th>
+            </tr>
+        </thead>
         {% for item in litros_por_secretaria_combustivel %}
         <tr>
             <td>{{ item.secretaria }}</td>
@@ -54,11 +55,13 @@ Relatório
 </div>
 <div class="container mb-4">
 <h3>Totais por Carro</h3>
-    <table class="table table-hover">
-        <tr>
-            <th>Placa</th>
-            <th>Total de Litros</th>
-        </tr>
+    <table class="table table-sm table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Placa</th>
+                <th>Total de Litros</th>
+            </tr>
+        </thead>
         {% for item in litros_por_carro %}
         <tr>
             <td>{{ item.placa }}</td>

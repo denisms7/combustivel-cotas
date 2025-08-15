@@ -4,6 +4,7 @@
 {% url 'alterar_usuario' as usuario_url %}
 {% url 'alterar_senha' as senha_url %}
 {% url 'abastecimento-added' as abastecimento_added %}
+{% url 'rel_abastecimento' as rel_abastecimento %}
 
 
 <ul class="nav nav-underline container mt-2 mb-3">
@@ -14,7 +15,7 @@
     </a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="{% url 'rel_abastecimento' %}">
+    <a class="nav-link {% if request.path == rel_abastecimento  %}active{% endif %}" href="{% url 'rel_abastecimento' %}">
       <i class="bi bi-bar-chart"></i> Relatório
     </a>
   </li>
