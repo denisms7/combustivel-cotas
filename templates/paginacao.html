@@ -7,6 +7,7 @@
 {% if page_obj.paginator.num_pages > 1 %}
 <nav class="container d-flex justify-content-center">
     <ul class="pagination">
+
         {% if page_obj.has_previous %}
             <li class="page-item btn-paginacao">
                 <a class="page-link" href="?page=1">
@@ -19,17 +20,35 @@
                 </a>
             </li>
         {% endif %}
+
         {% for i in page_obj.paginator.page_range %}
-        {% if page_obj.number == i %}
-            <li class="page-item btn-paginacao active">
-                <a class="page-link" href="#">{{ i }} </a>
-            </li>
-        {% else %}
-            <li class="page-item btn-paginacao">
-                <a class="page-link" href="?page={{ i }}">{{ i }}</a>
-            </li>
-        {% endif %}
+            {% if i <= 3 or i > page_obj.paginator.num_pages|add:'-3' %}
+                {% if page_obj.number == i %}
+                    <li class="page-item btn-paginacao active">
+                        <a class="page-link" href="#">{{ i }}</a>
+                    </li>
+                {% else %}
+                    <li class="page-item btn-paginacao">
+                        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                    </li>
+                {% endif %}
+            {% elif i >= page_obj.number|add:'-3' and i <= page_obj.number|add:'3' %}
+                {% if page_obj.number == i %}
+                    <li class="page-item btn-paginacao active">
+                        <a class="page-link" href="#">{{ i }}</a>
+                    </li>
+                {% else %}
+                    <li class="page-item btn-paginacao">
+                        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                    </li>
+                {% endif %}
+            {% elif i == page_obj.number|add:'-4' or i == page_obj.number|add:'4' %}
+                <li class="page-item btn-paginacao disabled">
+                    <a class="page-link" href="#">...</a>
+                </li>
+            {% endif %}
         {% endfor %}
+
         {% if page_obj.has_next %}
             <li class="page-item btn-paginacao">
                 <a class="page-link" href="?page={{ page_obj.next_page_number }}">
@@ -42,6 +61,7 @@
                 </a>
             </li>
         {% endif %}
+
     </ul>
 </nav>
 {% endif %}
