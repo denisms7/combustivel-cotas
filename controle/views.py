@@ -106,7 +106,7 @@ class BuscaVeiculos(LoginRequiredMixin, ListView):
 
         if query:
             queryset = queryset.filter(
-                Q(descricao__icontains=query) | Q(placa__icontains=query)
+                Q(descricao__icontains=query) | Q(placa__icontains=query) | Q(cod_veiculo__icontains=query)
             )
 
         return queryset.order_by('-cadastrado_em') 

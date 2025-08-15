@@ -20,7 +20,7 @@ Veiculos
         <div class="row mb-3">
             <label for="busca" class="form-label">Pesquisar:</label>
             <div class="d-flex align-items-end" id="busca">
-                <input type="text" name="q" value="{{ request.GET.q }}" placeholder=""
+                <input type="text" name="q" value="{{ request.GET.q }}" placeholder="ID, Placa e Descrição"
                     class="form-control me-1">
                 <button type="submit" class="btn btn-primary">
                     <i class="bi bi-search" id="lupacep"></i>
@@ -44,7 +44,7 @@ Veiculos
             <tbody>
                 {% for item in object_list %}
                 <tr>
-                    <td>{{ item.pk|default_if_none:"00" }}</td>
+                    <td>{{ item.cod_veiculo|default_if_none:"00" }}</td>
                     <td>{{ item.placa|default_if_none:"" }}</td>
                     <td>{{ item.descricao|default_if_none:"" }}</td>
                     <td>{{ item.get_combustivel_display|default_if_none:"" }}</td>
