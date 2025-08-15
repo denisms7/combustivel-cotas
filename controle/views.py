@@ -91,14 +91,10 @@ class AddedAbastecimento(LoginRequiredMixin, CreateView):
     
 
 
-
-
-
-
 class BuscaVeiculos(LoginRequiredMixin, ListView):
     model = Veiculo
     template_name = 'controle/veiculos.html'
-    paginate_by = 20
+    paginate_by = 30
 
     def get_queryset(self):
         queryset = super().get_queryset()
