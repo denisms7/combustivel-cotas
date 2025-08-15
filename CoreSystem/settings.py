@@ -175,6 +175,8 @@ JAZZMIN_SETTINGS = {
         "controle.Cota": "fas fa-box",
         "controle.Veiculo": "fas fa-car",
         "controle.Abastecimento": "fas fa-gas-pump", 
+        "controle.Secretaria": "fas fa-sitemap", 
+
 
         # Modelos padrão do Django
         "auth.User": "fas fa-user",

@@ -3,10 +3,12 @@
 {% url 'perfil' as perfil_url %}
 {% url 'alterar_usuario' as usuario_url %}
 {% url 'alterar_senha' as senha_url %}
+{% url 'abastecimento-added' as abastecimento_added %}
+
 
 <ul class="nav nav-underline container mt-2 mb-3">
   <li class="nav-item">
-    <a class="nav-link {% if request.path == '/' %}active{% endif %}" aria-current="page" href="{% url 'inicio' %}">
+    <a class="nav-link {% if request.path == '/' or request.path == abastecimento_added  %}active{% endif %}" aria-current="page" href="{% url 'inicio' %}">
         <img src="{% static 'img/ico.png' %}" alt="lg" style="max-height: 25px;">
         Abastecimento
     </a>
