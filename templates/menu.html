@@ -1,67 +1,62 @@
 {% load static %}
-<div class="text-bg-primary">
 
-<div class="container">
-<nav class="navbar navbar-expand-lg text-bg-primary">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'inicio' %}">
-            <img src="{% static 'img/ico.png' %}" alt="lg" style="max-height: 25px;">
-            INICIO
+{% url 'perfil' as perfil_url %}
+{% url 'alterar_usuario' as usuario_url %}
+{% url 'alterar_senha' as senha_url %}
+
+<ul class="nav nav-underline container mt-2 mb-3">
+  <li class="nav-item">
+    <a class="nav-link {% if request.path == '/' %}active{% endif %}" aria-current="page" href="{% url 'inicio' %}">
+        <img src="{% static 'img/ico.png' %}" alt="lg" style="max-height: 25px;">
+        INICIO
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">
+      <i class="bi bi-bar-chart"></i> Relatório
+    </a>
+  </li>
+  {% if user.is_superuser %}
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'admin:index' %}">
+      <i class="bi bi-gear"></i> Admin
+    </a>
+  </li>
+  {% endif %}
+
+  <li class="nav-item dropdown ms-auto">
+      <a class="nav-link dropdown-toggle {% if request.path == perfil_url or request.path == usuario_url or request.path == senha_url %}active{% endif %}"
+        role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bi bi-person-circle"></i>
+        {{ request.user.username }}
+      </a>
+    <ul class="dropdown-menu">
+      <li>
+        <a class="dropdown-item" href="{% url 'perfil' %}">
+          <i class="bi bi-person-vcard"></i> Perfil
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+      </li>
+      <li>
+        <a class="dropdown-item" href="{% url 'alterar_usuario' %}">
+          <i class="bi bi-person-gear"></i> Alterar Usuário
+        </a>
+      </li>
+      <li>
+        <a class="dropdown-item" href="{% url 'alterar_senha' %}">
+          <i class="bi bi-person-lock"></i> Alterar Senha
+        </a>
+      </li>
+      <li><hr class="dropdown-divider"></li>
+      <li class="text-center">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#sair">
+          <i class="bi bi-door-open"></i> Logout
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-          {% if user.is_superuser %}
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'admin:index' %}"><i class="bi bi-gear"></i> ADMIN</a>
-                </li>
-            </ul>
-            {% endif %}
+      </li>
+    </ul>
+  </li>
+</ul>
 
 
-            <ul class="navbar-nav">
-                <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-person-circle"></i>
-                    {{request.user.username}}
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="{% url 'perfil' %}">
-                        <i class="bi bi-person-vcard"></i>
-                        Perfil</a>
-                    </li>
-                    <li><a class="dropdown-item" href="{% url 'alterar_usuario' %}">
-                        <i class="bi bi-person-gear"></i>
-                        Alterar Usuário</a>
-                    </li>
-                    <li><a class="dropdown-item" href="{% url 'alterar_senha' %}">
-                        <i class="bi bi-person-lock"></i>
-                        Alterar Senha</a>
-                    </li>
-                    <li>
-                    <hr class="dropdown-divider">
-                    </li>
-                    <li class="text-center">
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#sair">
-                        <i class="bi bi-door-open"></i>
-                        Logout
-                    </button>
-                    </li>
-                </ul>
-                </li>
-            </ul>
-
-        </div>
-    </div>
-</nav>
-</div>
-</div>
-
-</div>
 
 
 
@@ -75,7 +70,7 @@
       </div>
       <div class="modal-body">
         <p>
-          Olá {{request.user.first_name}} {{request.user.last_name}}<br>
+          Olá {{request.user.username}}<br>
           Confirme para fazer logoff do sistema
         </p>
       </div>
