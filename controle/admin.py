@@ -31,7 +31,7 @@ class AbastecimentoResource(resources.ModelResource):
 
 @admin.register(Secretaria)
 class Secretariadmin(admin.ModelAdmin):
-    list_display = ['cadastrado_em', 'secretaria'] # ver tabela
+    list_display = ['secretaria'] # ver tabela
     search_fields = ['secretaria']
     readonly_fields = ['cadastrado_em'] # campos somente leitura
     list_per_page = 25  # quantidade de registros por página

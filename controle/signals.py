@@ -12,8 +12,7 @@ def cadastrar_cotas_padrao(sender, **kwargs):
         return
 
     cotas_padrao = [
-        {'nome': 'Cota Semanal A', 'litros': 20, 'tipo': 1},
-        {'nome': 'Cota Semanal B', 'litros': 10, 'tipo': 1},
+        {'nome': 'Cota Semanal 20L', 'litros': 20, 'tipo': 1},
     ]
 
     for cota_data in cotas_padrao:
