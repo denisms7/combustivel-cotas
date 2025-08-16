@@ -48,7 +48,6 @@ def cadastrar_secretarias_padrao(sender, **kwargs):
         "Secretaria de Assistência Social", 
         "Secretaria de Infraestrutura e Serviços Públicos",
         ]
-
     
     for nome in secretarias_padrao:
         Secretaria.objects.get_or_create(secretaria=nome)
@@ -93,4 +92,3 @@ def importar_veiculos(sender, **kwargs):
     except Exception as e:
         print(f"[IMPORTAR VEICULOS] Erro ao importar: {e} {desc}")
 
-        
