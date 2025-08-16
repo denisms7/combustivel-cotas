@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 class Secretaria(models.Model):
     cadastrado_em = models.DateTimeField(auto_now_add=True, verbose_name=_('Data de Cadastro'))
@@ -46,7 +47,8 @@ class Veiculo(models.Model):
     cadastrado_em = models.DateTimeField(auto_now_add=True, verbose_name=_('Data de Cadastro'))
     alterado_em = models.DateTimeField(auto_now=True, verbose_name=_('Data de Alteração'))
     descricao = models.CharField(max_length=150, verbose_name=_('Descrição'))
-    placa = models.CharField(max_length=150, verbose_name=_('Placa'), null=True, blank=True)
+    placa = models.CharField(max_length=10, verbose_name=_('Placa'), null=True, blank=True)
+    renavam = models.CharField(max_length=12, verbose_name=_('RENAVAM'), blank=True, null=True)
     combustivel = models.PositiveSmallIntegerField(default=1, choices=COMBUSTIVEL_CHOICES, verbose_name='Tipo')
     cota = models.ForeignKey(Cota, verbose_name=_('Cota'), default=1, on_delete=models.PROTECT)
     cota_qnt = models.IntegerField(default=1, verbose_name=_('N Abastecimentos'))
@@ -55,6 +57,22 @@ class Veiculo(models.Model):
         verbose_name = _('Veículo')
         verbose_name_plural = _('Veículos')
         ordering = ['descricao']
+
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=['placa'],
+                name='unique_placa_not_null',
+                condition=~models.Q(placa=None)
+            ),
+            models.UniqueConstraint(
+                fields=['renavam'],
+                name='unique_renavam_not_null',
+                condition=~models.Q(renavam=None)
+            ),
+        ]
+
+
 
     def __str__(self):
         return f'{self.placa or ""} {self.descricao}'

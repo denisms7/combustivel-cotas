@@ -91,4 +91,6 @@ def importar_veiculos(sender, **kwargs):
                 print(f"[IMPORTAR VEICULOS] Veículo {cod} - {desc} cadastrado.")
 
     except Exception as e:
-        print(f"[IMPORTAR VEICULOS] Erro ao importar: {e}")
+        print(f"[IMPORTAR VEICULOS] Erro ao importar: {e} {desc}")
+
+        
