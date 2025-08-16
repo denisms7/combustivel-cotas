@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.exceptions import ValidationError
 
 class Secretaria(models.Model):
     cadastrado_em = models.DateTimeField(auto_now_add=True, verbose_name=_('Data de Cadastro'))
@@ -14,7 +15,6 @@ class Secretaria(models.Model):
     
     def __str__(self):
         return f'{self.secretaria}'
-
 
 
 class Cota(models.Model):
@@ -58,21 +58,14 @@ class Veiculo(models.Model):
         verbose_name_plural = _('Veículos')
         ordering = ['descricao']
 
+    def clean(self):
+            # Verifica placa duplicada
+            if self.placa and Veiculo.objects.exclude(pk=self.pk).filter(placa=self.placa).exists():
+                raise ValidationError({'placa': _('Já existe um veículo cadastrado com esta placa.')})
 
-        constraints = [
-            models.UniqueConstraint(
-                fields=['placa'],
-                name='unique_placa_not_null',
-                condition=~models.Q(placa=None)
-            ),
-            models.UniqueConstraint(
-                fields=['renavam'],
-                name='unique_renavam_not_null',
-                condition=~models.Q(renavam=None)
-            ),
-        ]
-
-
+            # Verifica renavam duplicado
+            if self.renavam and Veiculo.objects.exclude(pk=self.pk).filter(renavam=self.renavam).exists():
+                raise ValidationError({'renavam': _('Já existe um veículo cadastrado com este RENAVAM.')})
 
     def __str__(self):
         return f'{self.placa or ""} {self.descricao}'
@@ -94,5 +87,3 @@ class Abastecimento(models.Model):
     def __str__(self):
         return f'{self.veiculo.placa or ""} {self.veiculo.descricao}'
     
-
-
