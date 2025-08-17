@@ -32,6 +32,14 @@
   </li>
   {% endif %}
 
+  
+
+
+
+
+
+
+
   <li class="nav-item dropdown ms-auto">
       <a class="nav-link dropdown-toggle {% if request.path == perfil_url or request.path == usuario_url or request.path == senha_url %}active{% endif %}"
         role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -62,6 +70,9 @@
       </li>
     </ul>
   </li>
+
+  {% include "tema.html" %}
+
 </ul>
 
 
